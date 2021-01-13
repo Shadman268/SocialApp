@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".PostActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/ImageButtonId"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#B89898"
+        android:layout_margin="10dp"
+        android:src="@mipmap/add_icon"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        />
+    <EditText
+        android:id="@+id/EditTextTitleId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="post title . . ."
+        />
+
+    <EditText
+        android:id="@+id/EditTextDescriptionId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="post description. . ."
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#26D52D"
+        android:layout_marginTop="30dp"
+        android:text="Submit Post"
+        />
+
+
+</LinearLayout>
