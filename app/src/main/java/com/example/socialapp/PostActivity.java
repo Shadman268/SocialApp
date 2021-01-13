@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -27,9 +29,11 @@ public class PostActivity extends AppCompatActivity {
     private EditText mPostTitle,mPostDesc;
     private Button msubBtn;
 
-    private Uri mImageUri=null;
+    private Uri mImageUri;
     private StorageReference mstorage;
     private ProgressDialog mProgress;
+
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         mstorage = FirebaseStorage.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Blog");
 
 
         mSelectImage = (ImageButton) findViewById(R.id.ImageButtonId);
@@ -81,15 +86,23 @@ public class PostActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    //Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    //@SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl();
+                    Task <Uri> downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+
+                    DatabaseReference newPost = mDatabase.push();
+
+                    newPost.child("title").setValue(title_val);
+                    newPost.child("desc").setValue(desc_val);
+                    newPost.child("image").setValue(downloadUrl,toString());
+
                     mProgress.dismiss();
+
+                    startActivity(new Intent(PostActivity.this,MainActivity.class));
                 }
             });
         }
 
     }
+    
 
 
     @Override
